@@ -1,26 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Switch, Route} from 'react-router-dom'
+import { compose } from 'redux';
 
-function App() {
+import './App.css';
+import { TPokemon } from './api/api';
+import PokemonCards from './Components/PokemonCards';
+import { addPokemonThunk } from './redux/pokemonReducer';
+import { AppStateType } from './redux/store';
+import PokemonPage from './Components/PokemonPage';
+import AbilityPokemon from './Components/AbilityPokemon';
+
+type TMapStateToProps = {
+  pokemonList: Array<TPokemon>
+}
+type TMapDispatchToProps = {
+  addPokemonThunk: any
+}
+type TOwnProps = {
+  
+}
+type PropsType = TMapStateToProps & TMapDispatchToProps & TOwnProps
+
+const App: React.FC<PropsType> = (props) => {
+  const { pokemonList, addPokemonThunk } = props
+
+  const [pokemonsCount] = useState(20)
+
+  useEffect(() => {
+    addPokemonThunk(pokemonsCount)
+  }, [pokemonsCount, addPokemonThunk])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Switch>
+        <Route path='/:id' render={() => <PokemonPage />} />
+        <Route path='/' exact render={() => <PokemonCards pokemons={pokemonList}  /> } />
+      </Switch>
+      {/* <div >{pokemonList.map(p => <div key={p.id} style={{ border: 'solid 2px red' }}><p>{p.id} {p.name}</p>
+        <img src={p.sprites?.front_default} alt="1" />
+
+      </div>)} </div> */}
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state: AppStateType): TMapStateToProps => ({
+  pokemonList: state.pokemons.pokemonsList
+})
+
+export default compose(
+  // withRouter,  useHistory for routing
+  connect<TMapStateToProps, TMapDispatchToProps, TOwnProps, AppStateType>(mapStateToProps, { addPokemonThunk })
+)(App)
