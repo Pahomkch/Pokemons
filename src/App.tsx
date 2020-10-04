@@ -1,26 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Switch, Route} from 'react-router-dom'
-import { compose } from 'redux';
+import { Switch, Route } from 'react-router-dom'
 
 import './App.css';
-import { TPokemon } from './api/api';
+import { TPokemon, getPokemonAbilitu, TPokemonAbility } from './api/api';
 import PokemonCards from './Components/PokemonCards';
 import { addPokemonThunk } from './redux/pokemonReducer';
 import { AppStateType } from './redux/store';
 import PokemonPage from './Components/PokemonPage';
-import AbilityPokemon from './Components/AbilityPokemon';
+import AbilitiPage from './Components/AbilitiPage';
 
-type TMapStateToProps = {
-  pokemonList: Array<TPokemon>
-}
-type TMapDispatchToProps = {
-  addPokemonThunk: any
-}
-type TOwnProps = {
-  
-}
-type PropsType = TMapStateToProps & TMapDispatchToProps & TOwnProps
 
 const App: React.FC<PropsType> = (props) => {
   const { pokemonList, addPokemonThunk } = props
@@ -31,25 +20,37 @@ const App: React.FC<PropsType> = (props) => {
     addPokemonThunk(pokemonsCount)
   }, [pokemonsCount, addPokemonThunk])
 
+  if (pokemonList.length < pokemonsCount) {
+  return <div>Loading... We waiting also {pokemonsCount - pokemonList.length}</div>
+  }
   return (
     <div>
       <Switch>
+        <Route path='/abiliti/:abilityNumber' render={() => <AbilitiPage getAbility={getPokemonAbilitu} />} />
         <Route path='/:id' render={() => <PokemonPage />} />
-        <Route path='/' exact render={() => <PokemonCards pokemons={pokemonList}  /> } />
+        <Route path='/' exact render={() => <PokemonCards pokemons={pokemonList} />} />
       </Switch>
-      {/* <div >{pokemonList.map(p => <div key={p.id} style={{ border: 'solid 2px red' }}><p>{p.id} {p.name}</p>
-        <img src={p.sprites?.front_default} alt="1" />
-
-      </div>)} </div> */}
     </div>
   );
 }
 
 const mapStateToProps = (state: AppStateType): TMapStateToProps => ({
-  pokemonList: state.pokemons.pokemonsList
+  pokemonList: state.pokemons.pokemonsList.filter(p => p.id !== 0)
 })
 
-export default compose(
-  // withRouter,  useHistory for routing
-  connect<TMapStateToProps, TMapDispatchToProps, TOwnProps, AppStateType>(mapStateToProps, { addPokemonThunk })
-)(App)
+export default connect<TMapStateToProps, TMapDispatchToProps, TOwnProps, AppStateType>(mapStateToProps, { addPokemonThunk, getPokemonAbilitu })
+  (App)
+
+type PropsType = TMapStateToProps & TMapDispatchToProps & TOwnProps
+
+type TMapStateToProps = {
+  pokemonList: Array<TPokemon>
+}
+type TMapDispatchToProps = {
+  addPokemonThunk: any
+  getPokemonAbilitu: (id: number) => Promise<TPokemonAbility>
+}
+type TOwnProps = {
+
+}
+

@@ -7,8 +7,54 @@ const instance = axios.create({
 export const getPakemonApi = (id: number) => {
     return instance.get<TPokemon>(`pokemon/${id}`).then(res => res.data)
 }
-//<TPokemon>
 
+export const getPokemonAbilitu = (id: number) => {
+    return instance.get<TPokemonAbility>('ability/' + id).then(res => res.data)
+}
+
+export type TPokemonAbility = {
+    id: number
+    name: string
+    is_main_series: boolean
+    generation: NamedAPIResource
+    names: Array<Name>
+    effect_entries: Array<VerboseEffect>
+    effect_changes: Array<AbilityEffectChange>
+    flavor_text_entries: Array<AbilityFlavorText>
+    pokemon: Array<AbilityPokemon>
+}
+
+type AbilityPokemon = {
+    is_hidden: boolean
+    slot: number
+    pokemon: NamedAPIResource
+}
+
+type AbilityFlavorText = {
+    flavor_text: string
+    language: NamedAPIResource
+    version_group: NamedAPIResource
+}
+
+type AbilityEffectChange = {
+    effect_entries: Array<Effect>
+    version_group: NamedAPIResource
+}
+
+type Effect = {
+    effect: string
+    language: NamedAPIResource
+}
+
+type VerboseEffect = {
+    effect: string
+    short_effect: string
+    language: NamedAPIResource
+}
+type Name = {
+    name: string
+    language: NamedAPIResource
+}
 export type PokemonAbility = {
     is_hidden: boolean
     slot: number

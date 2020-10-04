@@ -1,5 +1,6 @@
-import { Dispatch } from "react"
+import { ThunkAction } from "redux-thunk"
 import { getPakemonApi, TPokemon } from "../api/api"
+import { AppStateType } from "./store"
 const ADD_POKEMONS = 'test-assignment/pokeAPI/ADD_POKEMONS'
 
 
@@ -51,11 +52,12 @@ type TAddPokemonAC = {
     type: typeof ADD_POKEMONS,
     payload: TPokemon
 }
+
 export const addPokemonAC = (payload: TPokemon): TAddPokemonAC => ({ type: ADD_POKEMONS, payload }) //changePokemon
 
 
 // ***************** Thunk *****************
-export const addPokemonThunk = (id: number) => async (dispatch: Dispatch<ActionsType>): Promise<void> => {
+export const addPokemonThunk = (id: number): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) => {
     for (let index = 1; index <= id; index++) {
         getPakemonApi(index).then(pokemon => {
             dispatch(addPokemonAC(pokemon))

@@ -1,5 +1,5 @@
 import React, { MouseEvent, useEffect, useState } from 'react'
-import { NavLink, useHistory, useParams } from 'react-router-dom'
+import {  useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { TPokemon, getPakemonApi } from '../api/api'
 import { AppStateType } from '../redux/store'
@@ -18,6 +18,7 @@ type PropsType = TMapStateToProps & TMapDispatchToProps & TOwnProps
 
 const PokemonPage: React.FC<PropsType> = (props) => {
     const history = useHistory()
+    //@ts-ignore
     const { id } = useParams()
     const pokemonWithCurrentId = props.pokemonList
     const [currentPokemon, setCurrentPokemon] = useState<TPokemon>(pokemonWithCurrentId[0])
@@ -47,8 +48,6 @@ const PokemonPage: React.FC<PropsType> = (props) => {
             <p>height: {currentPokemon.height.toString()}</p>
             <p>base_experience: {currentPokemon.base_experience.toString()}</p>
             <p>weight: {currentPokemon.weight.toString()}</p>
-            <p>location_area_encounters: {currentPokemon.location_area_encounters.toString()}</p>
-            <p>held_items: {currentPokemon.held_items.toString()}</p>
             <p>abilities:
                 <ul>
                     {currentPokemon.abilities.map(abilities =>
@@ -59,13 +58,10 @@ const PokemonPage: React.FC<PropsType> = (props) => {
                         </li>)}
                 </ul>
             </p>
-            <p>forms: {currentPokemon.forms.toString()}</p>
-            <p>game_indices: {currentPokemon.game_indices.toString()}</p>
-            <p>moves: {currentPokemon.moves.toString()}</p>
-            <p>species: {currentPokemon.species.toString()}</p>
-            <p>sprites: {currentPokemon.sprites.toString()}</p>
-            <p>stats: {currentPokemon.stats.toString()}</p>
-            <p>types: {currentPokemon.types.toString()}</p>
+            <p>forms: {currentPokemon.forms.map(form => `${form.name} `)}</p>
+            <p>species: {currentPokemon.species.name}</p>
+            <p>stats: {currentPokemon.stats.map(stats => `${stats.base_stat} ${stats.stat.name} |` )}</p>
+            <p>types: {currentPokemon.types.map(types => `${types.type.name} | `)}</p>
         </div>
     )
 }
