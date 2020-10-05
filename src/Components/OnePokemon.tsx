@@ -2,7 +2,6 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { TPokemon } from '../api/api'
 
-
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -16,14 +15,11 @@ type PropsType = {
 const useStyles = makeStyles({
     root: {
         width: 190,
-
         margin: 5
     },
     media: {
         height: 100,
         width: 190,
-        
-
     }
 });
 

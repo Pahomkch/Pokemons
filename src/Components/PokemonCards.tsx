@@ -8,8 +8,9 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 const useStyles = makeStyles((theme) => ({
-    margin: {
-        margin: theme.spacing(1),
+    search: {
+        margin: '0',
+        width: '100%',
     },
 }));
 
@@ -43,11 +44,10 @@ const PokemonCards: React.FC<PropsType> = (props) => {
     return (
         <div>
             <TextField
-                className={classes.margin}
+                className={classes.search}
                 value={nameSearch}
                 onChange={changeNameInput}
                 label="Filter pokemons by name"
-                fullWidth
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">

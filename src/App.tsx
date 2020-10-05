@@ -9,19 +9,36 @@ import { addPokemonThunk } from './redux/pokemonReducer';
 import { AppStateType } from './redux/store';
 import PokemonPage from './Components/PokemonPage';
 import AbilitiPage from './Components/AbilitiPage';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+}));
 
 const App: React.FC<PropsType> = (props) => {
   const { pokemonList, addPokemonThunk } = props
+  const classes = useStyles();
 
   const [pokemonsCount] = useState(20)
-
+  
   useEffect(() => {
     addPokemonThunk(pokemonsCount)
   }, [pokemonsCount, addPokemonThunk])
 
   if (pokemonList.length < pokemonsCount) {
-  return <div>Loading... We waiting also {pokemonsCount - pokemonList.length}</div>
+    return (
+      <div>
+        <Backdrop className={classes.backdrop} open >
+          <CircularProgress color="inherit" />
+          We are waiting {pokemonsCount - pokemonList.length} pokemons
+        </Backdrop>
+      </div>
+    )
   }
   return (
     <div>
