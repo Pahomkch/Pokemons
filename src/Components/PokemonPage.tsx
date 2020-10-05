@@ -72,6 +72,8 @@ const PokemonPage: React.FC<PropsType> = (props) => {
         })
     }, [id])
 
+    console.log(currentPokemon.types)
+
     return (
         <Container>
             <Button className={classes.root} onClick={clickToMain} variant="contained" color="primary">
@@ -100,6 +102,13 @@ const PokemonPage: React.FC<PropsType> = (props) => {
                             Is default: {currentPokemon.is_default.toString()}
                         </Typography>
                         <Typography variant="h6" color="textSecondary" component="p">
+                            Pokemon types: <ul className={classes.ulMargin}>
+                            {currentPokemon.types.map(types => {
+                                return <li key={types.type.name}>{types.type.name}</li>
+                            })}
+                            </ul>
+                        </Typography>
+                        <Typography variant="h6" color="textSecondary" component="p">
                             Height: {currentPokemon.height.toString()}
                         </Typography>
                         <Typography variant="h6" color="textSecondary" component="p">
@@ -112,7 +121,7 @@ const PokemonPage: React.FC<PropsType> = (props) => {
                             Abilities:
                                 <ul className={classes.ulMargin}>
                                 {currentPokemon.abilities.map(abilities =>
-                                    <li key={abilities.ability.name.toString()}>
+                                    <li key={abilities.ability.name.toString()} className={classes.listElement}>
                                         <AbilityPokemon abiliti={abilities.ability} />
                                     </li>)}
                             </ul>
@@ -136,12 +145,7 @@ const PokemonPage: React.FC<PropsType> = (props) => {
                         </Typography >
                     </CardContent>
                 </CardActionArea>
-
             </Card>
-
-
-
-
         </Container>
     )
 }

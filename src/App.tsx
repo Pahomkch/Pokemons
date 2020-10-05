@@ -45,7 +45,7 @@ const App: React.FC<PropsType> = (props) => {
       <Switch>
         <Route path='/abiliti/:abilityNumber' render={() => <AbilitiPage getAbility={getPokemonAbilitu} />} />
         <Route path='/:id' render={() => <PokemonPage />} />
-        <Route path='/' exact render={() => <PokemonCards pokemons={pokemonList} />} />
+        <Route path='/' render={() => <PokemonCards pokemons={pokemonList} />} />
       </Switch>
     </div>
   );
