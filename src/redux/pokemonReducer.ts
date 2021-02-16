@@ -13,41 +13,13 @@ type TInitialPokemonState = {
 export type ActionsType = TAddPokemonAC;
 
 const initialState = {
-  pokemonsList: [
-    {
-      id: 0,
-      name: "zero",
-      base_experience: 0,
-      height: 2,
-      is_default: false,
-      order: 0,
-      weight: 1,
-      abilities: [{ is_hidden: true, slot: 0, ability: { name: "a", url: "zer" } }],
-      forms: [{ name: "a", url: "zer" }],
-      game_indices: [{ game_index: 0, version: { name: "a", url: "zer" } }],
-      held_items: [{ item: { name: "a", url: "zer" }, version_details: "any" }],
-      location_area_encounters: "string",
-      moves: [{ move: { name: "a", url: "zer" }, version_group_details: "any" }],
-      sprites: {
-        front_default: "https://via.placeholder.com/96",
-        front_shiny: "string",
-        front_female: "string",
-        front_shiny_female: "string",
-        back_default: "string",
-        back_shiny: "string",
-        back_female: "string",
-        back_shiny_female: "string",
-      },
-      stats: [{ stat: { name: "a", url: "zer" }, effort: 0, base_stat: 0 }],
-      types: [{ slot: 0, type: { name: "a", url: "zer" } }],
-      species: { name: "a", url: "zer" },
-    },
-  ],
+  pokemonsList: [{}] as Array<TPokemon>,
 };
 
 export const pokemonReducer = (state = initialState, action: ActionsType): TInitialPokemonState => {
   switch (action.type) {
     case ADD_POKEMONS:
+      //delete sta
       return {
         ...state,
         pokemonsList: [...state.pokemonsList, action.payload],

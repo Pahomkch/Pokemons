@@ -6,7 +6,8 @@ let allReducers = combineReducers({
   pokemons: pokemonReducer,
 });
 
-export type AppStateType = ReturnType<typeof allReducers>;
+type rootReducer = typeof allReducers;
+export type AppStateType = ReturnType<rootReducer>;
 
 const store = createStore(allReducers, applyMiddleware(thunk));
 

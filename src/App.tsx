@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 
-import "./App.css";
-import { TPokemon, getPokemonAbilitu, TPokemonAbility } from "./api/api";
-import PokemonCards from "./Components/PokemonCards";
-import { addPokemonThunk } from "./redux/pokemonReducer";
 import { AppStateType } from "./redux/store";
+import { getPokemonAbility } from "./api/api";
+import { addPokemonThunk } from "./redux/pokemonReducer";
+import PokemonCards from "./Components/PokemonCards";
 import PokemonPage from "./Components/PokemonPage";
 import AbilitiPage from "./Components/AbilitiPage";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
+import { TPokemon, TPokemonAbility } from "./Types/Pokemon";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 const App: React.FC<PropsType> = (props) => {
   const { pokemonList, addPokemonThunk } = props;
   const classes = useStyles();
-
   const [pokemonsCount] = useState(20);
 
   useEffect(() => {
@@ -31,11 +30,12 @@ const App: React.FC<PropsType> = (props) => {
   }, [pokemonsCount, addPokemonThunk]);
 
   if (pokemonList.length < pokemonsCount) {
+    const leftToDownloadPokemons: number = pokemonsCount - pokemonList.length;
     return (
       <div>
         <Backdrop className={classes.backdrop} open>
           <CircularProgress color="inherit" />
-          We are waiting {pokemonsCount - pokemonList.length} pokemons
+          We are waiting {leftToDownloadPokemons} pokemons
         </Backdrop>
       </div>
     );
@@ -45,7 +45,7 @@ const App: React.FC<PropsType> = (props) => {
       <Switch>
         <Route
           path="/abiliti/:abilityNumber"
-          render={() => <AbilitiPage getAbility={getPokemonAbilitu} />}
+          render={() => <AbilitiPage getAbility={getPokemonAbility} />}
         />
         <Route path="/:id" render={() => <PokemonPage />} />
         <Route path="/" render={() => <PokemonCards pokemons={pokemonList} />} />
@@ -55,12 +55,12 @@ const App: React.FC<PropsType> = (props) => {
 };
 
 const mapStateToProps = (state: AppStateType): TMapStateToProps => ({
-  pokemonList: state.pokemons.pokemonsList.filter((p) => p.id !== 0),
+  pokemonList: state.pokemons.pokemonsList,
 });
 
 export default connect<TMapStateToProps, TMapDispatchToProps, TOwnProps, AppStateType>(
   mapStateToProps,
-  { addPokemonThunk, getPokemonAbilitu }
+  { addPokemonThunk, getPokemonAbility }
 )(App);
 
 type PropsType = TMapStateToProps & TMapDispatchToProps & TOwnProps;
@@ -70,6 +70,6 @@ type TMapStateToProps = {
 };
 type TMapDispatchToProps = {
   addPokemonThunk: any;
-  getPokemonAbilitu: (id: number) => Promise<TPokemonAbility>;
+  getPokemonAbility: (id: number) => Promise<TPokemonAbility>;
 };
 type TOwnProps = {};
