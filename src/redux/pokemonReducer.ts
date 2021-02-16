@@ -1,8 +1,10 @@
 import { ThunkAction } from "redux-thunk";
-import { getPakemonApi, TPokemon } from "../api/api";
+import { getPokemon } from "../api/api";
+import { TPokemon } from "../Types/Pokemon";
+import { TAddPokemonAC } from "../Types/Redux";
 import { AppStateType } from "./store";
 
-const ADD_POKEMONS = "test-assignment/pokeAPI/ADD_POKEMONS";
+export const ADD_POKEMONS = "test-assignment/pokeAPI/ADD_POKEMONS";
 
 type TInitialPokemonState = {
   pokemonsList: Array<TPokemon>;
@@ -55,19 +57,14 @@ export const pokemonReducer = (state = initialState, action: ActionsType): TInit
   }
 };
 
-type TAddPokemonAC = {
-  type: typeof ADD_POKEMONS;
-  payload: TPokemon;
-};
-
-export const addPokemonAC = (payload: TPokemon): TAddPokemonAC => ({ type: ADD_POKEMONS, payload }); //changePokemon
+export const addPokemonAC = (payload: TPokemon): TAddPokemonAC => ({ type: ADD_POKEMONS, payload });
 
 // ***************** Thunk *****************
 export const addPokemonThunk = (
   id: number
 ): ThunkAction<void, AppStateType, unknown, ActionsType> => async (dispatch) => {
   for (let index = 1; index <= id; index++) {
-    getPakemonApi(index).then((pokemon) => {
+    getPokemon(index).then((pokemon) => {
       dispatch(addPokemonAC(pokemon));
     });
   }

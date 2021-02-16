@@ -3,11 +3,10 @@ import thunk from "redux-thunk";
 import { pokemonReducer } from "./pokemonReducer";
 
 let allReducers = combineReducers({
-  pokemons: pokemonReducer
+  pokemons: pokemonReducer,
 });
 
-type rootReducer = typeof allReducers
-export type AppStateType = ReturnType<rootReducer>
+export type AppStateType = ReturnType<typeof allReducers>;
 
 const store = createStore(allReducers, applyMiddleware(thunk));
 
