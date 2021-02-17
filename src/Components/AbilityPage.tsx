@@ -23,6 +23,9 @@ const useStyles = makeStyles({
     listStyleType: "none",
     marginLeft: 15,
   },
+  name: {
+    textAlign: "center",
+  },
   center: {
     display: "flex",
     flexDirection: "column",
@@ -69,7 +72,7 @@ const AbilityPage: React.FC<TPropsType> = (props) => {
       <Card className={classes.root}>
         <CardActionArea className={classes.center}>
           <CardContent className={classes.textArea}>
-            <Typography gutterBottom variant="h3" component="h2">
+            <Typography className={classes.name} gutterBottom variant="h3" component="h2">
               {ability.name}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
