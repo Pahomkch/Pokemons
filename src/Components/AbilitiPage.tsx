@@ -37,8 +37,7 @@ const AbilitiPage: React.FC<PropsType> = (props) => {
   const { getAbility } = props;
   const classes = useStyles();
   const history = useHistory();
-  //@ts-ignore
-  const { abilityNumber } = useParams();
+  const { abilityNumber } = useParams<{ abilityNumber: string }>();
   const [ability, setAbility] = useState<TPokemonAbility>({
     id: 1,
     name: "stench",
@@ -115,7 +114,7 @@ const AbilitiPage: React.FC<PropsType> = (props) => {
   console.log(ability.effect_changes);
 
   useEffect(() => {
-    getAbility(abilityNumber).then((res) => {
+    getAbility(+abilityNumber).then((res) => {
       setAbility(res);
       res.effect_entries.forEach((effect, idx, arr) => {
         if (effect.language.name === "en") {
@@ -154,9 +153,9 @@ const AbilitiPage: React.FC<PropsType> = (props) => {
             <Typography variant="h6" color="textSecondary" component="p">
               Pokemon:{" "}
               <ul className={classes.ulMargin}>
-                {ability.pokemon.map((poke) => (
-                  <li key={poke.pokemon.name.toString()} className={classes.listElement}>
-                    {poke.pokemon.name.toString()}
+                {ability.pokemon.map((p) => (
+                  <li key={p.pokemon?.name?.toString()} className={classes.listElement}>
+                    {p.pokemon?.name?.toString()}
                   </li>
                 ))}
               </ul>
@@ -165,8 +164,8 @@ const AbilitiPage: React.FC<PropsType> = (props) => {
               Languages:{" "}
               <ul className={classes.ulMargin}>
                 {ability.names.map((abilities) => (
-                  <li key={abilities.name.toString()} className={classes.listElement}>
-                    {abilities.name.toString()}
+                  <li key={abilities?.name?.toString()} className={classes.listElement}>
+                    {abilities?.name?.toString()}
                   </li>
                 ))}
               </ul>

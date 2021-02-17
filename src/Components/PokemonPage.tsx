@@ -80,7 +80,7 @@ const PokemonPage: React.FC<PropsType> = (props) => {
               {currentPokemon.name}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Id: {currentPokemon.id.toString()}
+              Id: {currentPokemon?.id.toString()}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
               Order: {currentPokemon.order.toString()}

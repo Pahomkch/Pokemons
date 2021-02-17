@@ -13,7 +13,7 @@ type TInitialPokemonState = {
 export type ActionsType = TAddPokemonAC;
 
 const initialState = {
-  pokemonsList: [{}] as Array<TPokemon>,
+  pokemonsList: [] as Array<TPokemon>,
 };
 
 export const pokemonReducer = (state = initialState, action: ActionsType): TInitialPokemonState => {
