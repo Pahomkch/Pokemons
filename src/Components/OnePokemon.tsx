@@ -1,17 +1,13 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-import { TPokemon } from "../Types/Pokemon";
+import { TPropsType } from "../Types/OnePokemon";
 
-type PropsType = {
-  pokemon: TPokemon;
-};
 const useStyles = makeStyles({
   root: {
     width: 190,
@@ -21,9 +17,12 @@ const useStyles = makeStyles({
     height: 100,
     width: 190,
   },
+  text: {
+    textTransform: "capitalize",
+  },
 });
 
-const OnePokemon: React.FC<PropsType> = (props) => {
+const OnePokemon: React.FC<TPropsType> = (props) => {
   const { pokemon } = props;
   const classes = useStyles();
 
@@ -38,7 +37,7 @@ const OnePokemon: React.FC<PropsType> = (props) => {
               title={pokemon.name}
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h3">
+              <Typography className={classes.text} gutterBottom variant="h5" component="h3">
                 {pokemon.name}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">
