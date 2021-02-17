@@ -40,7 +40,7 @@ const OnePokemon: React.FC<TPropsType> = (props) => {
               <Typography className={classes.text} gutterBottom variant="h5" component="h3">
                 {pokemon.name}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="textSecondary" component="div">
                 <p>ID: {pokemon.id}</p>
                 <p>ORDER: {pokemon.order}</p>
               </Typography>

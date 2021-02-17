@@ -71,6 +71,7 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
           <CardMedia
             className={classes.media}
             image={currentPokemon.sprites?.front_default}
+            src={"img"}
             title={currentPokemon.name}
           />
           <CardContent className={classes.textArea}>
@@ -78,13 +79,13 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
               {currentPokemon.name}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Id: {currentPokemon?.id}
+              Id: {currentPokemon.id}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
               Order: {currentPokemon.order}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Is default: {currentPokemon.is_default}
+              Is default: {currentPokemon.is_default?.toString()}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="span">
               Pokemon types:{" "}
