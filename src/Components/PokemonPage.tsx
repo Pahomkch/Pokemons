@@ -13,11 +13,17 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import { TPokemon } from "../Types/Pokemon";
+import { TPropsType, TOwnProps, TMapStateToProps, TMapDispatchToProps } from "../Types/PokemonPage";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 600,
     minWidth: 400,
+  },
+  page: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   listElement: {
     listStyleType: "none",
@@ -32,38 +38,30 @@ const useStyles = makeStyles({
   },
   textArea: {
     padding: 0,
+    textTransform: "capitalize",
   },
   ulMargin: {
     margin: 0,
   },
 });
 
-type TMapStateToProps = {
-  pokemonList: Array<TPokemon>;
-};
-type TMapDispatchToProps = {
-  getPokemon: (id: number) => Promise<TPokemon>;
-};
-
-const PokemonPage: React.FC<PropsType> = (props) => {
+const PokemonPage: React.FC<TPropsType> = (props) => {
   const history = useHistory();
   const classes = useStyles();
-
-  //@ts-ignore
-  const { id } = useParams();
-  const [currentPokemon, setCurrentPokemon] = useState<TPokemon>(props.pokemonList[0]);
+  const { id } = useParams<{ id: string }>();
+  const [currentPokemon, setCurrentPokemon] = useState<TPokemon>({} as TPokemon);
 
   const clickToMain = (e: MouseEvent<HTMLButtonElement>) => {
     history.push("/");
   };
   useEffect(() => {
-    getPokemon(id).then((res) => {
+    getPokemon(+id).then((res) => {
       setCurrentPokemon(res);
     });
   }, [id]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div className={classes.page}>
       <Button className={classes.root} onClick={clickToMain} variant="contained" color="primary">
         To main page
       </Button>
@@ -80,35 +78,35 @@ const PokemonPage: React.FC<PropsType> = (props) => {
               {currentPokemon.name}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Id: {currentPokemon?.id.toString()}
+              Id: {currentPokemon?.id}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Order: {currentPokemon.order.toString()}
+              Order: {currentPokemon.order}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Is default: {currentPokemon.is_default.toString()}
+              Is default: {currentPokemon.is_default}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
               Pokemon types:{" "}
               <ul className={classes.ulMargin}>
-                {currentPokemon.types.map((types) => {
-                  return <li key={types.type.name}>{types.type.name}</li>;
+                {currentPokemon.types?.map((type) => {
+                  return <li key={type.type.name}>{type.type.name}</li>;
                 })}
               </ul>
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Height: {currentPokemon.height.toString()}
+              Height: {currentPokemon.height}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Weight: {currentPokemon.weight.toString()}
+              Weight: {currentPokemon.weight}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Base experience: {currentPokemon.base_experience.toString()}
+              Base experience: {currentPokemon.base_experience}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
               Abilities:
               <ul className={classes.ulMargin}>
-                {currentPokemon.abilities.map((abilities) => (
+                {currentPokemon.abilities?.map((abilities) => (
                   <li key={abilities.ability.name.toString()} className={classes.listElement}>
                     <AbilityPokemon abiliti={abilities.ability} />
                   </li>
@@ -116,15 +114,15 @@ const PokemonPage: React.FC<PropsType> = (props) => {
               </ul>
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Forms: {currentPokemon.forms.map((form) => `${form.name} `)}
+              Forms: {currentPokemon.forms?.map((form) => `${form.name} `)}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Species: {currentPokemon.species.name}
+              Species: {currentPokemon.species?.name}
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
               Stats:{" "}
               <ul className={classes.ulMargin}>
-                {currentPokemon.stats.map((stats) => (
+                {currentPokemon.stats?.map((stats) => (
                   <li key={stats.stat.name} className={classes.listElement}>
                     {stats.stat.name} : {stats.base_stat}
                   </li>
@@ -132,7 +130,7 @@ const PokemonPage: React.FC<PropsType> = (props) => {
               </ul>
             </Typography>
             <Typography variant="h6" color="textSecondary" component="p">
-              Types: {currentPokemon.types.map((types) => `${types.type.name} `)}
+              Types: {currentPokemon.types?.map((types) => `${types.type.name} `)}
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -141,12 +139,7 @@ const PokemonPage: React.FC<PropsType> = (props) => {
   );
 };
 
-const mapStateToProps = (state: AppStateType): TMapStateToProps => ({
-  pokemonList: state.pokemons.pokemonsList,
-});
-
-type TOwnProps = {};
-type PropsType = TMapStateToProps & TMapDispatchToProps & TOwnProps;
+const mapStateToProps = (state: AppStateType): TMapStateToProps => ({});
 
 export default connect<TMapStateToProps, TMapDispatchToProps, TOwnProps, AppStateType>(
   mapStateToProps,
