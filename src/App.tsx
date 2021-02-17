@@ -6,7 +6,7 @@ import { getPokemonAbility } from "./api/api";
 import { addPokemonThunk } from "./redux/pokemonReducer";
 import PokemonCards from "./Components/PokemonCards";
 import PokemonPage from "./Components/PokemonPage";
-import AbilitiPage from "./Components/AbilitiPage";
+import AbilityPage from "./Components/AbilityPage";
 import {
   AppPropsType,
   AppTMapStateToProps,
@@ -35,7 +35,7 @@ const App: React.FC<AppPropsType> = (props) => {
     <div>
       <Switch>
         <Route path="/abiliti/:abilityNumber">
-          <AbilitiPage getAbility={getPokemonAbility} />
+          <AbilityPage getAbility={getPokemonAbility} />
         </Route>
         <Route path="/:id">
           <PokemonPage />

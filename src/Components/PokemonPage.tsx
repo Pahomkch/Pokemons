@@ -62,7 +62,7 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
 
   return (
     <div className={classes.page}>
-      <Button className={classes.root} onClick={clickToMain} variant="contained" color="primary">
+      <Button fullWidth onClick={clickToMain} variant="contained" color="primary">
         To main page
       </Button>
 
@@ -86,7 +86,7 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
             <Typography variant="h6" color="textSecondary" component="p">
               Is default: {currentPokemon.is_default}
             </Typography>
-            <Typography variant="h6" color="textSecondary" component="p">
+            <Typography variant="h6" color="textSecondary" component="span">
               Pokemon types:{" "}
               <ul className={classes.ulMargin}>
                 {currentPokemon.types?.map((type) => {
@@ -103,7 +103,7 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
             <Typography variant="h6" color="textSecondary" component="p">
               Base experience: {currentPokemon.base_experience}
             </Typography>
-            <Typography variant="h6" color="textSecondary" component="p">
+            <Typography variant="h6" color="textSecondary" component="span">
               Abilities:
               <ul className={classes.ulMargin}>
                 {currentPokemon.abilities?.map((abilities) => (
@@ -119,7 +119,7 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
             <Typography variant="h6" color="textSecondary" component="p">
               Species: {currentPokemon.species?.name}
             </Typography>
-            <Typography variant="h6" color="textSecondary" component="p">
+            <Typography variant="h6" color="textSecondary" component="span">
               Stats:{" "}
               <ul className={classes.ulMargin}>
                 {currentPokemon.stats?.map((stats) => (
