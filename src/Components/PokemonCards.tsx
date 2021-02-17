@@ -6,34 +6,36 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import SearchIcon from "@material-ui/icons/Search";
 import { TPokemon } from "../Types/Pokemon";
+import { TPropsType } from "../Types/PokemonCards";
 
 const useStyles = makeStyles((theme) => ({
   search: {
     margin: "0",
     width: "100%",
   },
+  pokemonsCard: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
 }));
 
-type PropsType = {
-  pokemons: Array<TPokemon>;
-};
-
-const PokemonCards: React.FC<PropsType> = (props) => {
-  const classes = useStyles();
-
+const PokemonCards: React.FC<TPropsType> = (props) => {
   const pokemons = props.pokemons;
-  const [pokemonsArr, setPokemonsArr] = useState(pokemons);
+  const classes = useStyles();
+  const [pokemonsArr, setPokemonsArr] = useState<TPokemon[]>(pokemons);
   const [nameSearch, setNameSearch] = useState("");
+
   useEffect(() => {
     setPokemonsArr(pokemons);
   }, [pokemons, setPokemonsArr]);
 
   const changeNameInput = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("adsaddas");
-    setNameSearch(e.target.value);
+    const input = e.target.value;
+    setNameSearch(input);
     setPokemonsArr(
       pokemons.filter((p) => {
-        return p.name.toLowerCase().indexOf(e.target.value.toLowerCase()) !== -1;
+        return p.name.toLowerCase().indexOf(input.toLowerCase()) !== -1;
       })
     );
   };
@@ -54,12 +56,7 @@ const PokemonCards: React.FC<PropsType> = (props) => {
         }}
       />
 
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}>
+      <div className={classes.pokemonsCard}>
         {pokemonsArr.map((pokemon) => (
           <OnePokemon key={pokemon.id} pokemon={pokemon} />
         ))}
