@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
-
 import { AppStateType } from "./redux/store";
 import { getPokemonAbility } from "./api/api";
 import { addPokemonThunk } from "./redux/pokemonReducer";
@@ -11,7 +10,12 @@ import AbilitiPage from "./Components/AbilitiPage";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import { TPokemon, TPokemonAbility } from "./Types/Pokemon";
+import {
+  AppPropsType,
+  AppTMapStateToProps,
+  AppTMapDispatchToProps,
+  AppTOwnProps,
+} from "./Types/App";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -20,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const App: React.FC<PropsType> = (props) => {
+const App: React.FC<AppPropsType> = (props) => {
   const { pokemonList, addPokemonThunk } = props;
   const classes = useStyles();
   const [pokemonsCount] = useState(20);
@@ -54,22 +58,11 @@ const App: React.FC<PropsType> = (props) => {
   );
 };
 
-const mapStateToProps = (state: AppStateType): TMapStateToProps => ({
+const mapStateToProps = (state: AppStateType): AppTMapStateToProps => ({
   pokemonList: state.pokemons.pokemonsList,
 });
 
-export default connect<TMapStateToProps, TMapDispatchToProps, TOwnProps, AppStateType>(
+export default connect<AppTMapStateToProps, AppTMapDispatchToProps, AppTOwnProps, AppStateType>(
   mapStateToProps,
   { addPokemonThunk, getPokemonAbility }
 )(App);
-
-type PropsType = TMapStateToProps & TMapDispatchToProps & TOwnProps;
-
-type TMapStateToProps = {
-  pokemonList: Array<TPokemon>;
-};
-type TMapDispatchToProps = {
-  addPokemonThunk: any;
-  getPokemonAbility: (id: number) => Promise<TPokemonAbility>;
-};
-type TOwnProps = {};

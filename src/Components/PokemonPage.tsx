@@ -72,7 +72,7 @@ const PokemonPage: React.FC<PropsType> = (props) => {
         <CardActionArea className={classes.center}>
           <CardMedia
             className={classes.media}
-            image={currentPokemon.sprites.front_default}
+            image={currentPokemon.sprites?.front_default}
             title={currentPokemon.name}
           />
           <CardContent className={classes.textArea}>
