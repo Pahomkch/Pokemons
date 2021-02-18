@@ -51,6 +51,8 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
   const { id } = useParams<{ id: string }>();
   const [currentPokemon, setCurrentPokemon] = useState<TPokemon>({} as TPokemon);
 
+  console.log(props.pokemon);
+
   const clickToMain = (e: MouseEvent<HTMLButtonElement>) => {
     history.push("/");
   };
