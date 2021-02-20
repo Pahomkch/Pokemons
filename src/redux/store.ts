@@ -1,18 +1,15 @@
-import { combineReducers, applyMiddleware } from "redux";
+import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-
-import thunk from "redux-thunk";
-import { pokemonReducer } from "./pokemonReducer";
 import pokemonchiki from "./pokemonsSlice";
 
 let allReducers = combineReducers({
-  pokemons: pokemonReducer,
-  newPokemons: pokemonchiki,
+  pokemons: pokemonchiki,
 });
 
-type rootReducer = typeof allReducers;
-export type AppStateType = ReturnType<rootReducer>;
-
 const store = configureStore({ reducer: allReducers });
+
+type rootReducer = typeof allReducers;
+export type TAppStateType = ReturnType<rootReducer>;
+export type TDispatch = typeof store.dispatch;
 
 export default store;

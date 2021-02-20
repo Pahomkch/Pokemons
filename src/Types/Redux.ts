@@ -11,3 +11,11 @@ export type TInitialPokemonState = {
 };
 
 export type ActionsType = TAddPokemonAC;
+
+//****** switch to RTK slice */
+
+export type TInitialSliceState = {
+  pokemons: Array<TPokemon>;
+  error: boolean;
+  loading: boolean;
+};
