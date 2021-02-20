@@ -14,7 +14,7 @@ const Loading: React.FC<TLoadingPropsType> = (props) => {
   return (
     <Backdrop className={classes.backdrop} open>
       <CircularProgress color="inherit" />
-      {props.children}
+      <h4>{props.children}</h4>
     </Backdrop>
   );
 };

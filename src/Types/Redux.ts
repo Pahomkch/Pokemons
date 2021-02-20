@@ -17,5 +17,4 @@ export type ActionsType = TAddPokemonAC;
 export type TInitialSliceState = {
   pokemons: Array<TPokemon>;
   error: boolean;
-  loading: boolean;
 };

@@ -22,11 +22,7 @@ const App = () => {
 
   if (pokemons.length < pokemonsCount) {
     const leftToDownloadPokemons: number = pokemonsCount - pokemons.length;
-    return (
-      <Loading>
-        <h4>We are waiting {leftToDownloadPokemons} pokemons</h4>
-      </Loading>
-    );
+    return <Loading>We are waiting {leftToDownloadPokemons} pokemons</Loading>;
   }
   return (
     <div>

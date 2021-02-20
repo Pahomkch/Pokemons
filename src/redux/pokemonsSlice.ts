@@ -6,7 +6,6 @@ import { TInitialSliceState } from "../Types/Redux";
 const initialState: TInitialSliceState = {
   pokemons: [],
   error: false,
-  loading: false,
 };
 
 export const fetchPokemon = createAsyncThunk("pokemons/fetchOnePokemon", async (id: number) => {
@@ -24,15 +23,14 @@ const pokemonSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPokemon.pending, (state, action) => {
-      state.loading = true;
       state.error = false;
     });
     builder.addCase(fetchPokemon.fulfilled, (state, action) => {
       state.pokemons.push(action.payload);
+      state.error = false;
     });
     builder.addCase(fetchPokemon.rejected, (state, action) => {
       state.error = true;
-      state.loading = false;
     });
   },
 });

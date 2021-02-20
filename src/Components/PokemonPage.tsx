@@ -1,8 +1,6 @@
 import React, { MouseEvent, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
 import { getPokemon } from "../api/api";
-import { TAppStateType } from "../redux/store";
 import AbilityPokemon from "./AbilityPokemon";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,7 +11,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
 import { TPokemon } from "../Types/Pokemon";
-import { TPropsType, TOwnProps, TMapStateToProps, TMapDispatchToProps } from "../Types/PokemonPage";
+import { TOwnProps } from "../Types/PokemonPage";
 
 const useStyles = makeStyles({
   root: {
@@ -45,11 +43,10 @@ const useStyles = makeStyles({
   },
 });
 
-const PokemonPage: React.FC<TPropsType> = (props) => {
-  const history = useHistory();
+const PokemonPage: React.FC<TOwnProps> = (props) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
   const [currentPokemon, setCurrentPokemon] = useState<TPokemon>({} as TPokemon);
 
   const clickToMain = (e: MouseEvent<HTMLButtonElement>) => {
@@ -141,9 +138,4 @@ const PokemonPage: React.FC<TPropsType> = (props) => {
   );
 };
 
-const mapStateToProps = (state: TAppStateType): TMapStateToProps => ({});
-
-export default connect<TMapStateToProps, TMapDispatchToProps, TOwnProps, TAppStateType>(
-  mapStateToProps,
-  { getPokemon }
-)(PokemonPage);
+export default PokemonPage;
