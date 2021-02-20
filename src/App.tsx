@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
 import { Switch, Route } from "react-router-dom";
-import { AppStateType } from "./redux/store";
 import { getPokemonAbility } from "./api/api";
-import { addPokemonThunk } from "./redux/pokemonReducer";
+import { fetchPokemon } from "./redux/pokemonsSlice";
 import PokemonCards from "./Components/PokemonCards";
 import PokemonPage from "./Components/PokemonPage";
 import AbilityPage from "./Components/AbilityPage";
-import {
-  AppPropsType,
-  AppTMapStateToProps,
-  AppTMapDispatchToProps,
-  AppTOwnProps,
-} from "./Types/App";
-import Loading from "./Common/Loading";
 
-const App: React.FC<AppPropsType> = (props) => {
-  const { pokemonList, addPokemonThunk } = props;
+import Loading from "./Common/Loading";
+import { useAppDispatch, useAppSelector } from "./hooks/hooks";
+
+const App = () => {
+  const pokemons = useAppSelector((state) => state.pokemons.pokemons);
+  const dispatch = useAppDispatch();
   const [pokemonsCount] = useState(20);
 
   useEffect(() => {
-    addPokemonThunk(pokemonsCount);
-  }, [pokemonsCount, addPokemonThunk]);
+    for (let i = 1; i <= pokemonsCount; i++) {
+      dispatch(fetchPokemon(i));
+    }
+  }, [pokemonsCount, dispatch]);
 
-  if (pokemonList.length < pokemonsCount) {
-    const leftToDownloadPokemons: number = pokemonsCount - pokemonList.length;
+  if (pokemons.length < pokemonsCount) {
+    const leftToDownloadPokemons: number = pokemonsCount - pokemons.length;
     return (
       <Loading>
         <h4>We are waiting {leftToDownloadPokemons} pokemons</h4>
@@ -41,18 +38,11 @@ const App: React.FC<AppPropsType> = (props) => {
           <PokemonPage />
         </Route>
         <Route path="/">
-          <PokemonCards pokemons={pokemonList} />
+          <PokemonCards pokemons={pokemons} />
         </Route>
       </Switch>
     </div>
   );
 };
 
-const mapStateToProps = (state: AppStateType): AppTMapStateToProps => ({
-  pokemonList: state.pokemons.pokemonsList,
-});
-
-export default connect<AppTMapStateToProps, AppTMapDispatchToProps, AppTOwnProps, AppStateType>(
-  mapStateToProps,
-  { addPokemonThunk, getPokemonAbility }
-)(App);
+export default App;
