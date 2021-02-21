@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PokemonCards: React.FC<TPropsType> = (props) => {
+const PokemonCards = (props: TPropsType) => {
   const pokemons = props.pokemons;
   const classes = useStyles();
   const [pokemonsArr, setPokemonsArr] = useState<TPokemon[]>(pokemons);

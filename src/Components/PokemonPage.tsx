@@ -43,7 +43,7 @@ const useStyles = makeStyles({
   },
 });
 
-const PokemonPage: React.FC<TOwnProps> = (props) => {
+const PokemonPage = (props: TOwnProps) => {
   const classes = useStyles();
   const { id } = useParams<{ id: string }>();
   const history = useHistory();

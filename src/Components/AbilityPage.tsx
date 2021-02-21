@@ -40,7 +40,7 @@ const useStyles = makeStyles({
   },
 });
 
-const AbilityPage: React.FC<TPropsType> = (props) => {
+const AbilityPage = (props: TPropsType) => {
   const { getAbility } = props;
   const classes = useStyles();
   const history = useHistory();

@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Loading: React.FC<TLoadingPropsType> = (props) => {
+const Loading = (props: TLoadingPropsType & { children: React.ReactNode }) => {
   const classes = useStyles();
   return (
     <Backdrop className={classes.backdrop} open>

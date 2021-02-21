@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 });
 
-const OnePokemon: React.FC<TPropsType> = (props) => {
+const OnePokemon = (props: TPropsType) => {
   const { pokemon } = props;
   const classes = useStyles();
 
